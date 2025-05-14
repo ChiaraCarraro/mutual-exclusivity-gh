@@ -3,6 +3,7 @@
 .npmrc
 
 dist/
+participant_data
 
 # data (hide all json files)
 data/*.json

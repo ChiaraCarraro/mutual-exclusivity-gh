@@ -172,7 +172,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // enable fullscreen and have short break, before first trial starts
     if (trialNr === 0) {
-      if (!devmode & !responseLog.meta.iOSSafari); //openFullscreen();
+      if (!devmode & !responseLog.meta.iOSSafari); openFullscreen();
       headingFullscreen.style.display = 'none';
       headingTestsound.style.display = 'inline';
       speaker.setAttribute('visibility', 'visible');

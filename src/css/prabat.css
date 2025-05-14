@@ -1,10 +1,11 @@
 :root {
   --ccp-dark-blue: hsl(204, 39%, 26%);
   --ccp-light-blue: hsl(195, 100%, 46%);
-  --ccp-minerva-green: hsl(177, 100%, 21%);
+  --ccp-minerva-green: hsl(199, 100%, 21%);
   --ccp-light-green: hsl(64, 70%, 49%);
   --mdc-theme-primary: var(--ccp-minerva-green);
 }
+
 
 body {
   font-family: 'PT Sans Narrow', sans-serif;
