@@ -102,43 +102,45 @@ document.addEventListener('DOMContentLoaded', function () {
 
     event.target.style.border = '0.3vw solid blue';
 
-    // save response
-    // trial - 2 since array starts at zero (-1) and continue click already advanced trial count (-1)
-    responseLog.data[trialNr - 2] = {
-      timestamp: new Date(parseInt(t1)).toISOString(),
-      responseTime: t1 - t0,
-      trial: trialNr - 1,
-      // split('/').pop(): splits string at / and keeps only last element
-      // then remove N_ and .jpg
-      targetWord: 'T',
-      itemNr: allAudios.src
-        .split('/')
-        .pop()
-        .replace('N_', '')
-        .replace('V_', '')
-        .replace('A_', '')
-        .replace('_audio.mp3', ''),
-      chosenWord: event.target.src
-        .split('/')
-        .pop()
-        .replace('N_', '')
-        .replace('V_', '')
-        .replace('A_', '')
-        .replace('1_', '')
-        .replace('2_', '')
-        .replace('3_', '')
-        .replace('4_', '')
-        .replace('5_', '')
-        .replace('6_', '')
-        .replace('.svg', ''),
-      chosenPosition: event.target.id,
-      wordClass: allAudios.src.split('/').pop().startsWith('N_')
-        ? 'noun'
-        : allAudios.src.split('/').pop().startsWith('V_')
-        ? 'verb'
-        : allAudios.src.split('/').pop().startsWith('A_')
-        ? 'adjective'
-        : 'unknown',
+    if ((trialNr - 1) != 1 && (trialNr - 1) != 2 && (trialNr - 1) != 3) {
+      // save response
+      // trial - 2 since array starts at zero (-1) and continue click already advanced trial count (-1)
+      responseLog.data[trialNr - 2] = {
+        timestamp: new Date(parseInt(t1)).toISOString(),
+        responseTime: t1 - t0,
+        trial: trialNr - 4,
+        // split('/').pop(): splits string at / and keeps only last element
+        // then remove N_ and .jpg
+        targetWord: 'T',
+        itemNr: allAudios.src
+          .split('/')
+          .pop()
+          .replace('N_', '')
+          .replace('V_', '')
+          .replace('A_', '')
+          .replace('_audio.mp3', ''),
+        chosenWord: event.target.src
+          .split('/')
+          .pop()
+          .replace('N_', '')
+          .replace('V_', '')
+          .replace('A_', '')
+          .replace('1_', '')
+          .replace('2_', '')
+          .replace('3_', '')
+          .replace('4_', '')
+          .replace('5_', '')
+          .replace('6_', '')
+          .replace('.svg', ''),
+        chosenPosition: event.target.id,
+        wordClass: allAudios.src.split('/').pop().startsWith('N_')
+          ? 'noun'
+          : allAudios.src.split('/').pop().startsWith('V_')
+          ? 'verb'
+          : allAudios.src.split('/').pop().startsWith('A_')
+          ? 'adjective'
+          : 'unknown',
+      }
     };
 
     button.addEventListener('click', handleContinueClick, {
@@ -194,7 +196,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     // end of trials
-    if (trialNr === 19) {
+    if (trialNr === 22) {
       downloadData(responseLog.data, responseLog.meta.subjID);
 
       // save the video locally
@@ -219,8 +221,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
       window.location.href = `./goodbye.html?ID=${responseLog.meta.subjID}`;
     }
-    
-    
+        
 
     // hide last Trial, show background (empty pictures) instead
     if (trialNr > 0) {
@@ -240,53 +241,75 @@ document.addEventListener('DOMContentLoaded', function () {
       // get new trial
       //-------------------------------------------------
 
-      
+      // Familiarization trials
 
-      const uniqueTrial = getUniqueTrial(alreadyAppearedTrials, lastTwoLetters, counterN, counterA, counterV);
-      console.log('Trial:', uniqueTrial);
-
-      console.log('counters:', counterN, counterA, counterV);
-
-      if (uniqueTrial.charAt(0) == 'A') {
-        if (counterA < 2) {
-          counterA++;
-        }
-      } else if (uniqueTrial.charAt(0) == 'N') {
-        if (counterN < 2) {
-          counterN++;
-        }
-      } else if (uniqueTrial.charAt(0) == 'V') {
-        if (counterV < 2) {
-          counterV++;
-        }
-      }      
-
-      if (counterA == 2 && counterN == 2 && counterV == 2) {
-        counterA = 0;
-        counterN = 0;
-        counterV = 0;
+      if (trialNr === 1) {
+        document.getElementById('left').src = `images/apple.svg`;
+        document.getElementById('central').src = `images/truck.svg`;
+        document.getElementById('right').src = `images/turtle.svg`;
+        allAudios.src = `audio/N_zm_auge.mp3`;
       }
-
-      // Shuffle for new positions
-
-      let newPositions = shuffleArray(positions);
-  
-      // Make sure target was not in the same position as previous two trials
-      if (lastTwoPos.length >= 2) {
-        while (noSamePos(newPositions[2], lastTwoPos[0], lastTwoPos[1]) == false) {
-          newPositions = shuffleArray(positions);
-        }
-        lastTwoPos.shift(); // remove the oldest position
+      else if (trialNr === 2) {
+        document.getElementById('left').src = `images/helicopter.svg`;
+        document.getElementById('central').src = `images/cat.svg`;
+        document.getElementById('right').src = `images/choco_icecream.svg`;
+        allAudios.src = `audio/N_zm_auge.mp3`;
       }
+      else if (trialNr === 3) {
+        document.getElementById('left').src = `images/snake.svg`;
+        document.getElementById('central').src = `images/helicopter.svg`;
+        document.getElementById('right').src = `images/plant.svg`;
+        allAudios.src = `audio/N_zm_auge.mp3`;
+      }
+      else if (trialNr > 3) {
+        const uniqueTrial = getUniqueTrial(alreadyAppearedTrials, lastTwoLetters, counterN, counterA, counterV);
+        console.log('Trial:', uniqueTrial);
 
-      lastTwoPos.push(newPositions[2]); // append the new position to the array
+        console.log('counters:', counterN, counterA, counterV);
 
-      // Updating the filenames of images and audios of the chosen item for this trial
-      document.getElementById(newPositions[0]).src = `images/items/${uniqueTrial}_d1.svg`;
-      document.getElementById(newPositions[1]).src = `images/items/${uniqueTrial}_d2.svg`;
-      document.getElementById(newPositions[2]).src = `images/items/${uniqueTrial}_T.svg`;
-      allAudios.src = `audio/${uniqueTrial}_audio.mp3`;
-      console.log(alreadyAppearedTrials);
+        if (uniqueTrial.charAt(0) == 'A') {
+          if (counterA < 2) {
+            counterA++;
+          }
+        } else if (uniqueTrial.charAt(0) == 'N') {
+          if (counterN < 2) {
+            counterN++;
+          }
+        } else if (uniqueTrial.charAt(0) == 'V') {
+          if (counterV < 2) {
+            counterV++;
+          }
+        }      
+
+        if (counterA == 2 && counterN == 2 && counterV == 2) {
+          counterA = 0;
+          counterN = 0;
+          counterV = 0;
+        }
+
+        // Shuffle for new positions
+
+        let newPositions = shuffleArray(positions);
+    
+        // Make sure target was not in the same position as previous two trials
+        if (lastTwoPos.length >= 2) {
+          while (noSamePos(newPositions[2], lastTwoPos[0], lastTwoPos[1]) == false) {
+            newPositions = shuffleArray(positions);
+          }
+          lastTwoPos.shift(); // remove the oldest position
+        }
+
+        lastTwoPos.push(newPositions[2]); // append the new position to the array
+
+        // Updating the filenames of images and audios of the chosen item for this trial
+        document.getElementById(newPositions[0]).src = `images/items/${uniqueTrial}_d1.svg`;
+        document.getElementById(newPositions[1]).src = `images/items/${uniqueTrial}_d2.svg`;
+        document.getElementById(newPositions[2]).src = `images/items/${uniqueTrial}_T.svg`;
+
+        allAudios.src = `audio/${uniqueTrial}_audio.mp3`;
+        console.log(alreadyAppearedTrials);
+      }
+      // should finish here
 
       await pause(150);
 
