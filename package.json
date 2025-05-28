@@ -1,13 +1,13 @@
 {
-    "name": "orev-vn",
+    "name": "mutex",
     "version": "1.0.0",
     "description": "",
     "main": "src/index.js",
     "scripts": {
         "start": "webpack serve",
         "build": "NODE_ENV=production webpack",
-        "deploy": "npm run build && rsync -avuh --chmod D2775 dist/ $npm_config_user@$npm_config_server:$npm_config_path",
-        "fetchdata": "rsync -vraP $npm_config_user@$npm_config_server:$npm_config_data_path src/participant_data/"
+        "deploy": "npm run build & sh src/scripts/deploy.sh",
+        "fetchdata": "sh src/scripts/fetchdata.sh"
     },
     "keywords": [],
     "author": "",

@@ -10,7 +10,7 @@ module.exports = (env, argv) => {
     entry: {
       index: './src/index.js',
       instructions: './src/instructions.js',
-      prabat: './src/prabat.js',
+      mutex: './src/mutex.js',
       goodbye: './src/goodbye.js',
     },
 

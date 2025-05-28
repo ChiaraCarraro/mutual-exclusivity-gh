@@ -10,6 +10,7 @@ body {
     font-family: 'PT Sans Narrow', sans-serif;
     background-color: var(--ccp-minerva-green);
     color: hsl(0 0% 10%);
+    overflow: hidden;
 }
 
 .heading {
@@ -72,7 +73,6 @@ body {
     text-align: center;
 }
 
-
 /* mail encryption */
 
 .cryptedmail:after {
@@ -100,11 +100,6 @@ input[type='number']::-webkit-outer-spin-button {
     border: 0.3vw solid darkgrey;
     padding: 1%;
     width: 45%;
-}
-
-#orev-example-caption {
-    float: right;
-    text-align: right;
 }
 
 #text-next-to-img {

@@ -11,7 +11,7 @@ const webcam =
 // define what happens on button click
 const handleContinueClick = (event) => {
   event.preventDefault();
-  window.location.href = `./prabat.html?ID=${subjID}&webcam=${webcam}`;
+  window.location.href = `./mutex.html?ID=${subjID}&webcam=${webcam}`;
 };
 
 const handleWebcamClick = (event) => {
