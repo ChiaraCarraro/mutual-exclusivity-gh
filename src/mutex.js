@@ -106,7 +106,7 @@ document.addEventListener('DOMContentLoaded', function () {
     if ((trialNr - 1) != 1 && (trialNr - 1) != 2 && (trialNr - 1) != 3) {
       // save response
       // trial - 2 since array starts at zero (-1) and continue click already advanced trial count (-1)
-      responseLog.data[trialNr - 2] = {
+      responseLog.data[trialNr] = {
         timestamp: new Date(parseInt(t1)).toISOString(),
         responseTime: t1 - t0,
         trial: trialNr - 4,
@@ -146,6 +146,21 @@ document.addEventListener('DOMContentLoaded', function () {
           : allAudios.src.split('/').pop().startsWith('f_')
           ? 'filler'
           : 'unknown',
+        };
+      } 
+      else if ((trialNr - 1) == 1 || (trialNr - 1) == 2 || (trialNr - 1) == 3) {
+        // save response  
+        responseLog.data[trialNr] = {
+        timestamp: new Date(parseInt(t1)).toISOString(),
+        responseTime: t1 - t0,
+        trial: trialNr - 4,
+        // split('/').pop(): splits string at / and keeps only last element
+        // then remove N_ and .jpg
+        targetWord: allAudios.src.split('/').pop().replace('.mp3', ''),
+        itemNr: `${trialNr - 1}`,
+        chosenWord: event.target.src.split('/').pop().replace('.svg', ''),
+        chosenPosition: event.target.id,
+        wordClass: "familiarization",
       }
     };
 
@@ -259,7 +274,7 @@ document.addEventListener('DOMContentLoaded', function () {
       // Familiarization trials
 
       if (trialNr === 1) {
-        document.getElementById('left').src = `images/apple.svg`;
+        document.getElementById('left').src = `images/lemon.svg`;
         document.getElementById('central').src = `images/truck.svg`;
         document.getElementById('right').src = `images/turtle.svg`;
         allAudios.src = `audio/N_zm_auge.mp3`;
@@ -271,8 +286,8 @@ document.addEventListener('DOMContentLoaded', function () {
         allAudios.src = `audio/N_zm_auge.mp3`;
       }
       else if (trialNr === 3) {
-        document.getElementById('left').src = `images/snake.svg`;
-        document.getElementById('central').src = `images/banana.svg`;
+        document.getElementById('left').src = `images/hamster.svg`;
+        document.getElementById('central').src = `images/orange.svg`;
         document.getElementById('right').src = `images/plant.svg`;
         allAudios.src = `audio/N_zm_auge.mp3`;
       }
