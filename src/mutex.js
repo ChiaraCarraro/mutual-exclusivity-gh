@@ -112,34 +112,39 @@ document.addEventListener('DOMContentLoaded', function () {
         trial: trialNr - 4,
         // split('/').pop(): splits string at / and keeps only last element
         // then remove N_ and .jpg
-        targetWord: 'T',
+        targetWord: 't',
         itemNr: allAudios.src
           .split('/')
           .pop()
-          .replace('N_', '')
-          .replace('V_', '')
-          .replace('A_', '')
+          .replace('n_', '')
+          .replace('v_', '')
+          .replace('a_', '')
+          .replace('f_', '')
           .replace('_audio.mp3', ''),
         chosenWord: event.target.src
           .split('/')
           .pop()
-          .replace('N_', '')
-          .replace('V_', '')
-          .replace('A_', '')
+          .replace('n_', '')
+          .replace('v_', '')
+          .replace('a_', '')
+          .replace('f_', '')
           .replace('1_', '')
           .replace('2_', '')
           .replace('3_', '')
           .replace('4_', '')
           .replace('5_', '')
           .replace('6_', '')
-          .replace('.svg', ''),
+          .replace('.svg', '')
+          .replace('.gif', ''),
         chosenPosition: event.target.id,
-        wordClass: allAudios.src.split('/').pop().startsWith('N_')
+        wordClass: allAudios.src.split('/').pop().startsWith('n_')
           ? 'noun'
-          : allAudios.src.split('/').pop().startsWith('V_')
+          : allAudios.src.split('/').pop().startsWith('v_')
           ? 'verb'
-          : allAudios.src.split('/').pop().startsWith('A_')
+          : allAudios.src.split('/').pop().startsWith('a_')
           ? 'adjective'
+          : allAudios.src.split('/').pop().startsWith('f_')
+          ? 'filler'
           : 'unknown',
       }
     };
@@ -161,7 +166,9 @@ document.addEventListener('DOMContentLoaded', function () {
   let counterN = 0; // Initialize counter for nouns
   let counterA = 0; // Initialize counter for adjectives
   let counterV = 0; // Initialize counter for verbs
-    
+  let counterF = 0; // Initialize counter for fillers
+  
+
   const handleContinueClick = async (event) => {
     event.preventDefault();
 
@@ -197,7 +204,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     // end of trials
-    if (trialNr === 22) {
+    if (trialNr === 28) {
       downloadData(responseLog.data, responseLog.meta.subjID);
       uploadData(responseLog.data, responseLog.meta.subjID);
 
@@ -225,12 +232,16 @@ document.addEventListener('DOMContentLoaded', function () {
     }
         
 
-    // hide last Trial, show background (empty pictures) instead
     if (trialNr > 0) {
       headingTestsound.style.display = 'none';
       // pause audio (that might be playing if speaker item was clicked and prompt was repeated)
-      allAudios.pause();
-      allAudios.currentTime = 0;
+      // Stop any audio that is still playing
+      const audios = document.getElementsByTagName('audio');
+      Array.from(audios).forEach(audio => {
+        audio.pause();
+        audio.currentTime = 0;
+      });
+      
 
       betweenTrialsBackround.style.opacity = 1;
 
@@ -266,29 +277,34 @@ document.addEventListener('DOMContentLoaded', function () {
         allAudios.src = `audio/N_zm_auge.mp3`;
       }
       else if (trialNr > 3) {
-        const uniqueTrial = getUniqueTrial(alreadyAppearedTrials, lastTwoLetters, counterN, counterA, counterV);
+        const uniqueTrial = getUniqueTrial(alreadyAppearedTrials, lastTwoLetters, counterN, counterA, counterV, counterF);
         console.log('Trial:', uniqueTrial);
 
-        console.log('counters:', counterN, counterA, counterV);
+        console.log('counters:', counterN, counterA, counterV, counterF);
 
-        if (uniqueTrial.charAt(0) == 'A') {
+        if (uniqueTrial.charAt(0) == 'a') {
           if (counterA < 2) {
             counterA++;
           }
-        } else if (uniqueTrial.charAt(0) == 'N') {
+        } else if (uniqueTrial.charAt(0) == 'n') {
           if (counterN < 2) {
             counterN++;
           }
-        } else if (uniqueTrial.charAt(0) == 'V') {
+        } else if (uniqueTrial.charAt(0) == 'v') {
           if (counterV < 2) {
             counterV++;
           }
-        }      
+        } else if (uniqueTrial.charAt(0) == 'f') {
+          if (counterF < 2) {
+            counterF++;
+          }
+        }   
 
-        if (counterA == 2 && counterN == 2 && counterV == 2) {
+        if (counterA == 2 && counterN == 2 && counterV == 2 && counterF == 2) {
           counterA = 0;
           counterN = 0;
           counterV = 0;
+          counterF = 0;
         }
 
         // Shuffle for new positions
@@ -306,14 +322,18 @@ document.addEventListener('DOMContentLoaded', function () {
         lastTwoPos.push(newPositions[2]); // append the new position to the array
 
         // Updating the filenames of images and audios of the chosen item for this trial
-        if (uniqueTrial.charAt(0) != 'V') {
-        document.getElementById(newPositions[0]).src = `images/items/${uniqueTrial}_d1.svg`;
-        document.getElementById(newPositions[1]).src = `images/items/${uniqueTrial}_d2.svg`;
-        document.getElementById(newPositions[2]).src = `images/items/${uniqueTrial}_T.svg`;
-        } else if (uniqueTrial.charAt(0) == 'V') {
+        if (uniqueTrial.startsWith('f_5') || uniqueTrial.startsWith('f_6')) {
           document.getElementById(newPositions[0]).src = `images/items/${uniqueTrial}_d1.gif`;
           document.getElementById(newPositions[1]).src = `images/items/${uniqueTrial}_d2.gif`;
-          document.getElementById(newPositions[2]).src = `images/items/${uniqueTrial}_T.gif`;
+          document.getElementById(newPositions[2]).src = `images/items/${uniqueTrial}_t.gif`;
+        } else if (!uniqueTrial.startsWith('v') && !uniqueTrial.startsWith('f_5') && !uniqueTrial.startsWith('f_6')) {
+          document.getElementById(newPositions[0]).src = `images/items/${uniqueTrial}_d1.svg`;
+          document.getElementById(newPositions[1]).src = `images/items/${uniqueTrial}_d2.svg`;
+          document.getElementById(newPositions[2]).src = `images/items/${uniqueTrial}_t.svg`;
+        } else if (uniqueTrial.startsWith('v')) {
+          document.getElementById(newPositions[0]).src = `images/items/${uniqueTrial}_d1.gif`;
+          document.getElementById(newPositions[1]).src = `images/items/${uniqueTrial}_d2.gif`;
+          document.getElementById(newPositions[2]).src = `images/items/${uniqueTrial}_t.gif`;
         }
 
         allAudios.src = `audio/${uniqueTrial}_audio.mp3`;
@@ -321,12 +341,7 @@ document.addEventListener('DOMContentLoaded', function () {
       }
       // should finish here
 
-      await pause(150);
-
-      allAudios.play();
-
-      // save response time start point
-      t0 = new Date().getTime();
+      await pause(150);   
 
       betweenTrials.style.display = 'none';
 
@@ -337,18 +352,37 @@ document.addEventListener('DOMContentLoaded', function () {
 
       trialDiv.style.display = 'block';
 
-      const currentImages = Array.from(
-        trialDiv.getElementsByTagName('img'),
-      );
+      const currentImages = Array.from(trialDiv.getElementsByTagName('img'));
 
+      // Clear any previous listeners
+      currentImages.forEach((img) => {
+        const newImg = img.cloneNode(true);
+        img.replaceWith(newImg);
+      });
+
+      const updatedImages = Array.from(trialDiv.getElementsByTagName('img'));
+
+      // Add click listeners only after audio ends
       allAudios.onended = () => {
-        currentImages.forEach((img) => {
-          img.addEventListener('click', handleResponseClick, {
-            capture: false,
-            once: false,
-          });
+        // save response time start point
+        t0 = new Date().getTime();
+
+        updatedImages.forEach((img) => {
+          if (img.id !== 'character') {
+            img.addEventListener('click', handleResponseClick, {
+              capture: false,
+              once: false,
+            });
+          }
         });
       };
+
+      // Play audio after attaching the onended listener
+      try {
+        await allAudios.play();
+      } catch (err) {
+        console.warn('Audio playback failed:', err);
+      }
     }
     trialNr++;
   };
