@@ -119,7 +119,8 @@ document.addEventListener('DOMContentLoaded', function () {
           .replace('n_', '')
           .replace('v_', '')
           .replace('a_', '')
-          .replace('f_', '')
+          .replace('f1_', '')
+          .replace('f2_', '')
           .replace('_audio.mp3', ''),
         chosenWord: event.target.src
           .split('/')
@@ -127,7 +128,8 @@ document.addEventListener('DOMContentLoaded', function () {
           .replace('n_', '')
           .replace('v_', '')
           .replace('a_', '')
-          .replace('f_', '')
+          .replace('f1_', '')
+          .replace('f2_', '')
           .replace('1_', '')
           .replace('2_', '')
           .replace('3_', '')
@@ -143,8 +145,10 @@ document.addEventListener('DOMContentLoaded', function () {
           ? 'verb'
           : allAudios.src.split('/').pop().startsWith('a_')
           ? 'adjective'
-          : allAudios.src.split('/').pop().startsWith('f_')
-          ? 'filler'
+          : allAudios.src.split('/').pop().startsWith('f1_')
+          ? 'filler1'
+          : allAudios.src.split('/').pop().startsWith('f2_')
+          ? 'filler2'
           : 'unknown',
         };
       } 
@@ -181,7 +185,8 @@ document.addEventListener('DOMContentLoaded', function () {
   let counterN = 0; // Initialize counter for nouns
   let counterA = 0; // Initialize counter for adjectives
   let counterV = 0; // Initialize counter for verbs
-  let counterF = 0; // Initialize counter for fillers
+  let counterF1 = 0; // Initialize counter for fillers
+  let counterF2 = 0; // Initialize counter for fillers
   
 
   const handleContinueClick = async (event) => {
@@ -219,7 +224,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     // end of trials
-    if (trialNr === 28) {
+    if (trialNr === 34) {
       downloadData(responseLog.data, responseLog.meta.subjID);
       uploadData(responseLog.data, responseLog.meta.subjID);
 
@@ -274,28 +279,28 @@ document.addEventListener('DOMContentLoaded', function () {
       // Familiarization trials
 
       if (trialNr === 1) {
-        document.getElementById('left').src = `images/lemon.svg`;
-        document.getElementById('central').src = `images/truck.svg`;
-        document.getElementById('right').src = `images/turtle.svg`;
-        allAudios.src = `audio/zitrone.mp3`;
+        document.getElementById('left').src = `images/items/lemon.svg`;
+        document.getElementById('central').src = `images/items/truck.svg`;
+        document.getElementById('right').src = `images/items/turtle.svg`;
+        allAudios.src = `audio/lemon.mp3`;
       }
       else if (trialNr === 2) {
-        document.getElementById('left').src = `images/helicopter.svg`;
-        document.getElementById('central').src = `images/cat.svg`;
-        document.getElementById('right').src = `images/choco_icecream.svg`;
-        allAudios.src = `audio/katze.mp3`;
+        document.getElementById('left').src = `images/items/helicopter.svg`;
+        document.getElementById('central').src = `images/items/cat.svg`;
+        document.getElementById('right').src = `images/items/choco_icecream.svg`;
+        allAudios.src = `audio/cat.mp3`;
       }
       else if (trialNr === 3) {
-        document.getElementById('left').src = `images/hamster.svg`;
-        document.getElementById('central').src = `images/orange.svg`;
-        document.getElementById('right').src = `images/plant.svg`;
-        allAudios.src = `audio/pflanze.mp3`;
+        document.getElementById('left').src = `images/items/hamster.svg`;
+        document.getElementById('central').src = `images/items/orange.svg`;
+        document.getElementById('right').src = `images/items/plant.svg`;
+        allAudios.src = `audio/plant.mp3`;
       }
       else if (trialNr > 3) {
-        const uniqueTrial = getUniqueTrial(alreadyAppearedTrials, lastTwoLetters, counterN, counterA, counterV, counterF);
+        const uniqueTrial = getUniqueTrial(alreadyAppearedTrials, lastTwoLetters, counterN, counterA, counterV, counterF1, counterF2);
         console.log('Trial:', uniqueTrial);
 
-        console.log('counters:', counterN, counterA, counterV, counterF);
+        console.log('counters:', counterN, counterA, counterV, counterF1, counterF2);
 
         if (uniqueTrial.charAt(0) == 'a') {
           if (counterA < 2) {
@@ -309,17 +314,22 @@ document.addEventListener('DOMContentLoaded', function () {
           if (counterV < 2) {
             counterV++;
           }
-        } else if (uniqueTrial.charAt(0) == 'f') {
-          if (counterF < 2) {
-            counterF++;
+        } else if (uniqueTrial.startsWith('f1')) {
+          if (counterF1 < 2) {
+            counterF1++;
           }
-        }   
+        } else if (uniqueTrial.startsWith('f2')) {
+          if (counterF2 < 2) {
+            counterF2++;
+          }
+        }
 
-        if (counterA == 2 && counterN == 2 && counterV == 2 && counterF == 2) {
+        if (counterA == 2 && counterN == 2 && counterV == 2 && counterF1 == 2 && counterF2 == 2) {
           counterA = 0;
           counterN = 0;
           counterV = 0;
-          counterF = 0;
+          counterF1 = 0;
+          counterF2 = 0;
         }
 
         // Shuffle for new positions
@@ -337,11 +347,11 @@ document.addEventListener('DOMContentLoaded', function () {
         lastTwoPos.push(newPositions[2]); // append the new position to the array
 
         // Updating the filenames of images and audios of the chosen item for this trial
-        if (uniqueTrial.startsWith('f_3') || uniqueTrial.startsWith('f_4')) {
+        if (uniqueTrial.startsWith('f1_3') || uniqueTrial.startsWith('f1_4') || uniqueTrial.startsWith('f2_3') || uniqueTrial.startsWith('f2_4')) {
           document.getElementById(newPositions[0]).src = `images/items/${uniqueTrial}_d1.gif`;
           document.getElementById(newPositions[1]).src = `images/items/${uniqueTrial}_d2.gif`;
           document.getElementById(newPositions[2]).src = `images/items/${uniqueTrial}_t.gif`;
-        } else if (!uniqueTrial.startsWith('v') && !uniqueTrial.startsWith('f_3') && !uniqueTrial.startsWith('f_4')) {
+        } else if (!uniqueTrial.startsWith('v') && !uniqueTrial.startsWith('f1_3') && !uniqueTrial.startsWith('f1_4') && !uniqueTrial.startsWith('f2_3') && !uniqueTrial.startsWith('f2_4')) {
           document.getElementById(newPositions[0]).src = `images/items/${uniqueTrial}_d1.svg`;
           document.getElementById(newPositions[1]).src = `images/items/${uniqueTrial}_d2.svg`;
           document.getElementById(newPositions[2]).src = `images/items/${uniqueTrial}_t.svg`;
