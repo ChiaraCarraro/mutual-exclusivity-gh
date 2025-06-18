@@ -130,7 +130,7 @@ body {
   justify-content: center;
 }
 .object {
-  height: 100%; /* Matches the height of the containing div */
+  height: 350px; /* Matches the height of the containing div */
   width: auto; /* Width adjusts based on the image's aspect ratio */
   max-width: 100%; /* Ensures it doesn't exceed the container's width */
 }

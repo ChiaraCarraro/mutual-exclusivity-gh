@@ -109,7 +109,7 @@ document.addEventListener('DOMContentLoaded', function () {
       responseLog.data[trialNr] = {
         timestamp: new Date(parseInt(t1)).toISOString(),
         responseTime: t1 - t0,
-        trial: trialNr - 4,
+        trial: trialNr - 2,
         // split('/').pop(): splits string at / and keeps only last element
         // then remove N_ and .jpg
         targetWord: 't',
@@ -153,7 +153,7 @@ document.addEventListener('DOMContentLoaded', function () {
         responseLog.data[trialNr] = {
         timestamp: new Date(parseInt(t1)).toISOString(),
         responseTime: t1 - t0,
-        trial: trialNr - 4,
+        trial: trialNr - 2,
         // split('/').pop(): splits string at / and keeps only last element
         // then remove N_ and .jpg
         targetWord: allAudios.src.split('/').pop().replace('.mp3', ''),
@@ -277,19 +277,19 @@ document.addEventListener('DOMContentLoaded', function () {
         document.getElementById('left').src = `images/lemon.svg`;
         document.getElementById('central').src = `images/truck.svg`;
         document.getElementById('right').src = `images/turtle.svg`;
-        allAudios.src = `audio/N_zm_auge.mp3`;
+        allAudios.src = `audio/zitrone.mp3`;
       }
       else if (trialNr === 2) {
         document.getElementById('left').src = `images/helicopter.svg`;
         document.getElementById('central').src = `images/cat.svg`;
         document.getElementById('right').src = `images/choco_icecream.svg`;
-        allAudios.src = `audio/N_zm_auge.mp3`;
+        allAudios.src = `audio/katze.mp3`;
       }
       else if (trialNr === 3) {
         document.getElementById('left').src = `images/hamster.svg`;
         document.getElementById('central').src = `images/orange.svg`;
         document.getElementById('right').src = `images/plant.svg`;
-        allAudios.src = `audio/N_zm_auge.mp3`;
+        allAudios.src = `audio/pflanze.mp3`;
       }
       else if (trialNr > 3) {
         const uniqueTrial = getUniqueTrial(alreadyAppearedTrials, lastTwoLetters, counterN, counterA, counterV, counterF);
@@ -337,11 +337,11 @@ document.addEventListener('DOMContentLoaded', function () {
         lastTwoPos.push(newPositions[2]); // append the new position to the array
 
         // Updating the filenames of images and audios of the chosen item for this trial
-        if (uniqueTrial.startsWith('f_5') || uniqueTrial.startsWith('f_6')) {
+        if (uniqueTrial.startsWith('f_3') || uniqueTrial.startsWith('f_4')) {
           document.getElementById(newPositions[0]).src = `images/items/${uniqueTrial}_d1.gif`;
           document.getElementById(newPositions[1]).src = `images/items/${uniqueTrial}_d2.gif`;
           document.getElementById(newPositions[2]).src = `images/items/${uniqueTrial}_t.gif`;
-        } else if (!uniqueTrial.startsWith('v') && !uniqueTrial.startsWith('f_5') && !uniqueTrial.startsWith('f_6')) {
+        } else if (!uniqueTrial.startsWith('v') && !uniqueTrial.startsWith('f_3') && !uniqueTrial.startsWith('f_4')) {
           document.getElementById(newPositions[0]).src = `images/items/${uniqueTrial}_d1.svg`;
           document.getElementById(newPositions[1]).src = `images/items/${uniqueTrial}_d2.svg`;
           document.getElementById(newPositions[2]).src = `images/items/${uniqueTrial}_t.svg`;
