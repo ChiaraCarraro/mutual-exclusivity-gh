@@ -10,7 +10,7 @@ body {
     font-family: 'PT Sans Narrow', sans-serif;
     background-color: var(--ccp-minerva-green);
     color: hsl(0 0% 10%);
-    overflow: hidden;
+    overflow: scroll;
 }
 
 .heading {
@@ -101,12 +101,13 @@ input[type='number']::-webkit-outer-spin-button {
     padding: 1%;
     width: 45%;
 }
-
 #text-next-to-img {
     display: inline;
     font-size: 1.50rem;
     text-align: center;
     margin: 5%;
+    margin-left: 10%;
+    font-weight: bold;
 }
 
 .even-columns {

@@ -420,13 +420,27 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // use trial - 1 since the trial count already went up in the continue click function
     // pause audio
-    if (trialNr > 1) {
-      allAudios.pause();
-      allAudios.currentTime = 0;
-    }
+    if (trialNr === 1) {
+      const testSoundElement = document.getElementById('testsound');
+      if (testSoundElement) {
+        testSoundElement.play();
+      } else {
+        console.warn('Element with ID "testsound" not found.');
+      }
+    } else if (trialNr > 1) {
 
-    // play audio of current trial
-    allAudios.play();
+      if (trialNr > 1) {
+        allAudios.pause();
+        allAudios.currentTime = 0;
+      }
+
+      // play audio of current trial
+      if (allAudios) {
+        allAudios.play();
+      } else {
+        console.warn('Element with ID "audio" not found.');
+      }
+    }
   };
 
   //------------------------------------------------------------------

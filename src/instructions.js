@@ -1,5 +1,6 @@
 import './css/landingpages.css';
 const button = document.getElementById('instructions-button');
+const speaker = document.getElementById('speaker');
 
 // get and store id
 const subjID =
@@ -24,4 +25,16 @@ button.addEventListener('click', handleContinueClick, {
 
 button.addEventListener('click', handleWebcamClick, {
   capture: false,
+});
+
+const handleSpeakerClick = async (event) => {
+    event.preventDefault();
+
+    const testSoundElement = document.getElementById('instruction-sound');
+    testSoundElement.play();
+};
+
+speaker.addEventListener('click', handleSpeakerClick, {
+    capture: false,
+    once: false,
 });
