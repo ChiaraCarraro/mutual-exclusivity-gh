@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <script src="./mutex.js" defer></script>
+    <link rel="stylesheet" href="mutex.css" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- Favicon -->
+    <link rel="icon" href="./logos/cipcip.svg" />
+    <link rel="icon" href="./logos/cipcip.svg" type="image/svg+xml" />
+    <title>MUTUAL EXCLUSIVITY</title>
+  </head>
+
+  <body>
+    <div id="flex-wrapper" style="background-color: #f5f9fd" >
+      <div class="flex-item">
+        <h2
+          id="heading-fullscreen"
+          style="
+            position: absolute;
+            top: 40%;
+            left: 50%;
+            transform: translateX(-50%) translateY(-50%);
+            text-align: center;
+            font-size: 1.5em;
+          "
+        >
+          <p>
+            Nehmen Sie sich so viel Zeit, wie Sie möchten. Falls Ihr Kind
+            unruhig wird oder sich langweilt, können Sie jederzeit eine kurze
+            Pause machen.
+          </p>
+
+          <p>
+            Wenn Ihr Kind Sie um Rat fragt oder sich unsicher ist, sagen Sie
+            bitte "Zeig, was Du denkst". Alles, was Ihr Kind antwortet, ist
+            prima.
+          </p>
+
+          <p>
+            Bitte helfen Sie Ihrem Kind nicht bei den Aufgaben - wir wollen ja
+            etwas über Kinder lernen!
+          </p>
+
+          <p>
+            Bitte klicken Sie jetzt auf "WEITER", um den Vollbildmodus zu
+            aktivieren.
+          </p>
+
+          <p>
+            Die nächste Seite könnte einen Moment zum Laden brauchen. Vielen Dank für Ihre Geduld! 😊
+          </p>
+
+        </h2>
+
+        <h2
+          id="heading-testsound"
+          style="
+            position: absolute;
+            top: 40%;
+            left: 50%;
+            transform: translateX(-50%) translateY(-50%);
+            text-align: center;
+            display: none;
+            font-size: 1.5em;
+          "
+        >
+          <p>Haben Sie gerade ein kurzes Klimper-Geräusch gehört?</p>
+
+          <p>
+            Super! Falls nicht, klicken Sie bitte auf das Lautsprecher-Symbol,
+            um Ihren Ton zu testen.
+          </p>
+
+          <p>
+            Bitte klicken Sie jetzt auf "WEITER", um mit dem Spiel zu beginnen.
+          </p>
+        </h2>
+
+        <div class="main-flex-sheet">
+          <div id="testsound-button" class="flex-sheet trials" style="display: none" >
+            <audio id="testsound" src="audio/testsound.mp3"></audio>
+          </div>
+
+          <div id="between-trials" class="flex-sheet">
+            <img
+              id="between-trials-background"
+              src="images/backgrounds/background_task.svg"
+              style="opacity: 0"
+            />
+          </div>
+          
+          <!-- EXPERIMENTAL TRIALS-->
+
+          <div id="trialInterface" class="flex-sheet trials" style="display: none; height: 100%"> <!-- sistemare!!-->
+            <audio id="audio" src=""></audio>
+            <img
+              id="background"
+              src="images/backgrounds/background_task.svg"
+            />
+            <div class="character" style="position: relative;">
+              <img
+              id="character"
+              src=""
+              style="opacity: 0; position: relative; z-index: 1;"
+              />
+            </div>
+            <div id="objectsrow" class="row">
+              <div id="object1">
+                <img
+                  id="left"
+                  class="object"
+                  src=""
+                />
+              </div>
+              <div id="object2">
+                <img
+                  id="central"
+                  class="object"
+                  src=""
+                />
+              </div>
+              <div id="object3">
+                <img
+                  id="right"
+                  class="object"
+                  src=""
+                />
+              </div>
+            </div>
+          </div>
+
+          <!-- end of main-flex-sheet -->
+        </div>
+        <svg
+          id="svg"
+          xmlns="http://www.w3.org/2000/svg"
+          width="10%"
+          height="10%"
+          viewBox="0 0 394.79 394.79"
+        >
+          <g id="speaker" visibility="hidden">
+            <circle
+              id="speaker-circle"
+              cx="197.4"
+              cy="197.4"
+              r="197.4"
+              fill="#006c66"
+              fill-opacity="0.6"
+            />
+            <g id="speaker-sign">
+              <path
+                d="M728.7,1341.46a8.92,8.92,0,0,0-9.11.35l-80.12,52H609.86a8.91,8.91,0,0,0-8.91,8.91v78.09a8.91,8.91,0,0,0,8.91,8.91h29.61l80.12,52a8.91,8.91,0,0,0,13.77-7.47v-185A8.9,8.9,0,0,0,728.7,1341.46Z"
+                transform="translate(-532.7 -1240.32)"
+                fill="#fff"
+              />
+              <path
+                d="M758.17,1504.85a6.24,6.24,0,0,0,2.26-.43c20.41-7.92,34.12-32.41,34.12-60.93,0-25.23-11.11-48-28.32-58.13a6.25,6.25,0,1,0-6.32,10.78c13.45,7.89,22.15,26.47,22.15,47.35,0,23-10.76,43.3-26.16,49.28a6.25,6.25,0,0,0,2.27,12.08Z"
+                transform="translate(-532.7 -1240.32)"
+                fill="#fff"
+              />
+              <path
+                d="M774.48,1530.91a6.2,6.2,0,0,0,2.26-.43c28.67-11.13,48.69-47.14,48.69-87.57,0-36.37-15.9-69.19-40.51-83.61a6.25,6.25,0,0,0-6.32,10.79c20.86,12.22,34.34,40.8,34.34,72.82,0,35.39-16.75,66.61-40.72,75.92a6.25,6.25,0,0,0,2.26,12.08Z"
+                transform="translate(-532.7 -1240.32)"
+                fill="#fff"
+              />
+              <path
+                d="M791.28,1555.75a6.32,6.32,0,0,1-2.29-12.21c32.65-12.67,55.45-54.23,55.45-101.07,0-42.22-18.2-80.16-46.36-96.67a6.31,6.31,0,1,1,6.38-10.89c32,18.72,52.61,60.94,52.61,107.56,0,51.93-26.11,98.33-63.5,112.85A6.36,6.36,0,0,1,791.28,1555.75Z"
+                transform="translate(-532.7 -1240.32)"
+                fill="#fff"
+              />
+            </g>
+          </g>
+        </svg>
+      
+      
+        <div class="button-center-wrapper">
+          <button type="button" class="custom-button" id="mutex-button" disabled>
+            <span><strong>WEITER</strong></span>
+          </button>
+        </div>        
+        <!-- <a href="https://www.eva.mpg.de/imprint/" target="_blank">Impressum</a> -->
+       <!-- end flex-item -->
+      </div>
+     <!-- end flex-wrapper -->
+    </div>
+  </body>
+</html>

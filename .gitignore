@@ -2,7 +2,6 @@
 # Configs
 src/scripts
 
-dist/
 src/participant_data
 
 # data (hide all json files)

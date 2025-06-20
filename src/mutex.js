@@ -202,8 +202,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // enable fullscreen and have short break, before first trial starts
     if (trialNr === 0) {
-      // Preload images to ensure they are ready when needed
-      const imagePaths = [
+      const filePaths = [ 
         'images/items/a_1_t.svg',
         'images/items/a_1_d1.svg',
         'images/items/a_1_d2.svg',
@@ -294,53 +293,103 @@ document.addEventListener('DOMContentLoaded', function () {
         'images/items/v_6_d1.gif',
         'images/items/v_6_d2.gif',
         'images/items/v_6_t.gif',
+        'audio/a_1_audio.mp3',
+        'audio/a_2_audio.mp3',
+        'audio/a_3_audio.mp3',
+        'audio/a_4_audio.mp3',
+        'audio/a_5_audio.mp3',
+        'audio/a_6_audio.mp3',
+        'audio/n_1_audio.mp3',
+        'audio/n_2_audio.mp3',
+        'audio/n_3_audio.mp3',
+        'audio/n_4_audio.mp3',
+        'audio/n_5_audio.mp3',
+        'audio/n_6_audio.mp3',
+        'audio/f1_1_audio.mp3',
+        'audio/f1_2_audio.mp3',
+        'audio/f1_3_audio.mp3',
+        'audio/f1_4_audio.mp3',
+        'audio/f1_5_audio.mp3',
+        'audio/f1_6_audio.mp3',
+        'audio/f2_1_audio.mp3',
+        'audio/f2_2_audio.mp3',
+        'audio/f2_3_audio.mp3',
+        'audio/f2_4_audio.mp3',
+        'audio/f2_5_audio.mp3',
+        'audio/f2_6_audio.mp3',
+        'audio/v_1_audio.mp3',
+        'audio/v_2_audio.mp3',
+        'audio/v_3_audio.mp3',
+        'audio/v_4_audio.mp3',
+        'audio/v_5_audio.mp3',
+        'audio/v_6_audio.mp3',
+        'audio/cat.mp3',
+        'audio/lemon.mp3',
+        'audio/plant.mp3',
       ];
 
-      const preloadImages = (paths) =>
+      const preloadAssets = (paths) =>
         Promise.all(
-          paths.map(
-            (src) =>
-              new Promise((resolve, reject) => {
+          paths.map((src) => {
+            return new Promise((resolve) => {
+              if (src.endsWith('.mp3')) {
+                const audio = new Audio();
+                audio.src = src;
+                audio.oncanplaythrough = resolve;
+                audio.onerror = () => {
+                  console.warn(`Failed to preload audio: ${src}`);
+                  resolve();
+                };
+              } else {
                 const img = new Image();
                 img.src = src;
                 img.onload = resolve;
                 img.onerror = () => {
-                  console.warn(`Failed to load: ${src}`);
-                  resolve(); // don’t block on failure
+                  console.warn(`Failed to preload image: ${src}`);
+                  resolve();
                 };
-              })
-          )
+              }
+            });
+          })
         );
 
-      preloadImages(imagePaths).then(() => {
-        console.log('All images loaded (or attempted)');
-        button.disabled = false;
+      // Start preload and wait for it to finish
+      preloadAssets(filePaths).then(async () => {
+        console.log('✅ All assets preloaded');
 
+        // Now continue with the rest of the flow
+        if (!devmode && !responseLog.meta.iOSSafari) {
+          openFullscreen();
+        }
+
+        headingFullscreen.style.display = 'none';
+        headingTestsound.style.display = 'inline';
+        speaker.setAttribute('visibility', 'visible');
+
+        await pause(1000);
+
+        const testSoundElement = document.getElementById('testsound');
+        if (testSoundElement) {
+          try {
+            await testSoundElement.play();
+            console.log('✅ Test sound played');
+          } catch (err) {
+            console.warn('⚠️ Test sound could not be played:', err);
+          }
+        } else {
+          console.warn('⚠️ Element with ID "testsound" not found.');
+        }
+
+        await pause(1000);
+
+        button.disabled = false;
         button.addEventListener('click', handleContinueClick, {
           capture: false,
+          once: true,
         });
       });
-
-      if (!devmode & !responseLog.meta.iOSSafari); openFullscreen();
-      headingFullscreen.style.display = 'none';
-      headingTestsound.style.display = 'inline';
-      speaker.setAttribute('visibility', 'visible');
-      await pause(1000);
-      // for safari, first sound needs to happen on user interaction
-      const testSoundElement = document.getElementById('testsound');
-      if (testSoundElement) {
-        testSoundElement.play();
-      } else {
-        console.warn('Element with ID "testsound" not found.');
-      }
-
-      await pause(1000);
-
-      button.addEventListener('click', handleContinueClick, {
-        capture: false,
-        once: true,
-      });
     }
+
 
     // end of trials
     if (trialNr === 34) {
