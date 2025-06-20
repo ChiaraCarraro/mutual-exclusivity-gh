@@ -1,1 +1,175 @@
-:root{--ccp-dark-blue: hsl(204, 39%, 26%);--ccp-light-blue: hsl(195, 100%, 46%);--ccp-minerva-green: hsl(199, 100%, 21%);--ccp-light-green: hsl(64, 70%, 49%);--mdc-theme-primary: var(--ccp-minerva-green)}body{font-family:"PT Sans Narrow",sans-serif;background-color:hsl(199, 100%, 21%);background-color:var(--ccp-minerva-green);color:hsl(0, 0%, 10%);overflow:scroll}.heading{font-family:cholla-sans,sans-serif;font-weight:700;letter-spacing:.02rem;color:hsl(199, 100%, 21%);color:var(--ccp-minerva-green);text-align:center;font-size:2.5rem}.heading-final{font-family:cholla-sans,sans-serif;font-weight:700;letter-spacing:.02rem;color:hsl(199, 100%, 21%);color:var(--ccp-minerva-green);text-align:center;font-size:1.75rem}#heading-2{font-size:larger}.heading-em{font-family:cholla-sans,sans-serif;font-weight:700;font-style:italic;letter-spacing:.02rem;color:hsl(199, 100%, 21%);color:var(--ccp-minerva-green)}.text{font-family:pt-sans-narrow,sans-serif;font-weight:400;color:hsl(0, 0%, 10%)}.text-strong{font-family:pt-sans-narrow,sans-serif;font-weight:700;color:hsl(0, 0%, 20%)}#flex-wrapper{margin-top:5vh;margin-bottom:5vh;width:80vw;justify-content:center !important;align-items:center;margin-left:17vh;margin-right:5vh;display:flex;background-color:#f5f9fd}.flex-item{width:80vw;margin-bottom:5vh;text-align:center}.cryptedmail:after{content:attr(data-name) "@" attr(data-domain) "." attr(data-tld)}.ccp-button{background-color:hsl(199, 100%, 21%) !important;background-color:var(--ccp-minerva-green) !important;margin:10px 0 !important}.ccp-button:disabled{background-color:hsl(177, 100%, 36%) !important}input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-spin-button{opacity:1}#mutex-example{margin:2%;float:right;border:.3vw solid darkgrey;padding:1%;width:45%}#text-next-to-img{display:inline;font-size:1.5rem;text-align:center;margin:5%;margin-left:10%;font-weight:bold}.even-columns{display:flex;align-items:center}.even-columns>*{flex-basis:100%}.even-columns img{width:55%;height:auto;padding:0%}.custom-button{background-color:hsl(199, 100%, 21%) !important;background-color:var(--ccp-minerva-green) !important;margin:20px 0 !important;color:white;border:none;padding:17px 28px;font-size:25px;border-radius:6px;cursor:pointer}.custom-button:disabled{background-color:hsl(177, 100%, 36%) !important}.input-field input{width:40%;padding:10px;font-size:18px;border:1px solid #ccc;border-radius:5px;box-sizing:border-box;text-align:center}.input-field input:focus{border-color:hsl(199, 100%, 21%) !important;border-color:var(--ccp-minerva-green) !important;outline:none}#id-counter{font-size:16px}.radio-label{margin:20px}#video-img-item{max-width:100%}
+:root {
+  --ccp-dark-blue: hsl(204, 39%, 26%);
+  --ccp-light-blue: hsl(195, 100%, 46%);
+  --ccp-minerva-green: hsl(199, 100%, 21%);
+  --ccp-light-green: hsl(64, 70%, 49%);
+  --mdc-theme-primary: var(--ccp-minerva-green);
+}
+
+body {
+  font-family: "PT Sans Narrow", sans-serif;
+  background-color: hsl(199, 100%, 21%);
+  background-color: var(--ccp-minerva-green);
+  color: hsl(0, 0%, 10%);
+  overflow: scroll;
+}
+
+.heading {
+  font-family: cholla-sans, sans-serif;
+  font-weight: 700;
+  letter-spacing: 0.02rem;
+  color: hsl(199, 100%, 21%);
+  color: var(--ccp-minerva-green);
+  text-align: center;
+  font-size: 2.5rem;
+}
+
+.heading-final {
+  font-family: cholla-sans, sans-serif;
+  font-weight: 700;
+  letter-spacing: 0.02rem;
+  color: hsl(199, 100%, 21%);
+  color: var(--ccp-minerva-green);
+  text-align: center;
+  font-size: 1.75rem;
+}
+
+#heading-2 {
+  font-size: larger;
+}
+
+.heading-em {
+  font-family: cholla-sans, sans-serif;
+  font-weight: 700;
+  font-style: italic;
+  letter-spacing: 0.02rem;
+  color: hsl(199, 100%, 21%);
+  color: var(--ccp-minerva-green);
+}
+
+.text {
+  font-family: pt-sans-narrow, sans-serif;
+  font-weight: 400;
+  color: hsl(0, 0%, 10%);
+}
+
+.text-strong {
+  font-family: pt-sans-narrow, sans-serif;
+  font-weight: 700;
+  color: hsl(0, 0%, 20%);
+}
+
+#flex-wrapper {
+  margin-top: 5vh;
+  margin-bottom: 5vh;
+  width: 80vw;
+  justify-content: center !important;
+  align-items: center;
+  margin-left: 17vh;
+  margin-right: 5vh;
+  display: flex;
+  background-color: #f5f9fd;
+}
+
+.flex-item {
+  width: 80vw;
+  margin-bottom: 5vh;
+  text-align: center;
+}
+
+/* mail encryption */
+.cryptedmail:after {
+  content: attr(data-name) "@" attr(data-domain) "." attr(data-tld);
+}
+
+.ccp-button {
+  background-color: hsl(199, 100%, 21%) !important;
+  background-color: var(--ccp-minerva-green) !important;
+  margin: 10px 0 !important;
+}
+
+.ccp-button:disabled {
+  background-color: hsl(177, 100%, 36%) !important;
+}
+
+/* ensures the increment/decrement arrows always display */
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+  opacity: 1;
+}
+
+#mutex-example {
+  margin: 2%;
+  float: right;
+  border: 0.3vw solid darkgrey;
+  padding: 1%;
+  width: 45%;
+}
+
+#text-next-to-img {
+  display: inline;
+  font-size: 1.5rem;
+  text-align: center;
+  margin: 5%;
+  margin-left: 10%;
+  font-weight: bold;
+}
+
+.even-columns {
+  display: flex;
+  align-items: center;
+}
+
+.even-columns > * {
+  flex-basis: 100%;
+}
+
+.even-columns img {
+  width: 55%;
+  height: auto;
+  padding: 0%;
+}
+
+.custom-button {
+  background-color: hsl(199, 100%, 21%) !important;
+  background-color: var(--ccp-minerva-green) !important;
+  margin: 20px 0 !important;
+  color: white;
+  border: none;
+  padding: 17px 28px;
+  font-size: 25px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.custom-button:disabled {
+  background-color: hsl(177, 100%, 36%) !important;
+}
+
+.input-field input {
+  width: 40%;
+  padding: 10px;
+  font-size: 18px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-sizing: border-box;
+  text-align: center;
+}
+
+.input-field input:focus {
+  border-color: hsl(199, 100%, 21%) !important;
+  border-color: var(--ccp-minerva-green) !important;
+  outline: none;
+}
+
+#id-counter {
+  font-size: 16px;
+}
+
+.radio-label {
+  margin: 20px;
+}
+
+#video-img-item {
+  max-width: 100%;
+}
