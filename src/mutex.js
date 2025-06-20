@@ -202,6 +202,125 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // enable fullscreen and have short break, before first trial starts
     if (trialNr === 0) {
+      // Preload images to ensure they are ready when needed
+      const imagePaths = [
+        'images/items/a_1_t.svg',
+        'images/items/a_1_d1.svg',
+        'images/items/a_1_d2.svg',
+        'images/items/a_2_t.svg',
+        'images/items/a_2_d1.svg',
+        'images/items/a_2_d2.svg',
+        'images/items/a_3_t.svg',
+        'images/items/a_3_d1.svg',
+        'images/items/a_3_d2.svg',
+        'images/items/a_4_t.svg',
+        'images/items/a_4_d1.svg',
+        'images/items/a_4_d2.svg',
+        'images/items/a_5_t.svg',
+        'images/items/a_5_d1.svg',
+        'images/items/a_5_d2.svg',
+        'images/items/a_6_t.svg',
+        'images/items/a_6_d1.svg',
+        'images/items/a_6_d2.svg',
+        'images/items/n_1_t.svg',
+        'images/items/n_1_d1.svg',
+        'images/items/n_1_d2.svg',
+        'images/items/n_2_t.svg',
+        'images/items/n_2_d1.svg',
+        'images/items/n_2_d2.svg',
+        'images/items/n_3_t.svg',
+        'images/items/n_3_d1.svg',
+        'images/items/n_3_d2.svg',
+        'images/items/n_4_t.svg',
+        'images/items/n_4_d1.svg',
+        'images/items/n_4_d2.svg',
+        'images/items/n_5_t.svg',
+        'images/items/n_5_d1.svg',
+        'images/items/n_5_d2.svg',
+        'images/items/n_6_t.svg',
+        'images/items/n_6_d1.svg',
+        'images/items/n_6_d2.svg',
+        'images/items/f1_1_d1.svg',
+        'images/items/f1_1_d2.svg',
+        'images/items/f1_1_t.svg',
+        'images/items/f1_2_d1.svg',
+        'images/items/f1_2_d2.svg',
+        'images/items/f1_2_t.svg',
+        'images/items/f1_3_d1.gif',
+        'images/items/f1_3_d2.gif',
+        'images/items/f1_3_t.gif',
+        'images/items/f1_4_d1.gif',
+        'images/items/f1_4_d2.gif',
+        'images/items/f1_4_t.gif',
+        'images/items/f1_5_d1.svg',
+        'images/items/f1_5_d2.svg',
+        'images/items/f1_5_t.svg',
+        'images/items/f1_6_d1.svg',
+        'images/items/f1_6_d2.svg',
+        'images/items/f1_6_t.svg',
+        'images/items/f2_1_d1.svg',
+        'images/items/f2_1_d2.svg',
+        'images/items/f2_1_t.svg',
+        'images/items/f2_2_d1.svg',
+        'images/items/f2_2_d2.svg',
+        'images/items/f2_2_t.svg',
+        'images/items/f2_3_d1.gif',
+        'images/items/f2_3_d2.gif',
+        'images/items/f2_3_t.gif',
+        'images/items/f2_4_d1.gif',
+        'images/items/f2_4_d2.gif',
+        'images/items/f2_4_t.gif',
+        'images/items/f2_5_d1.svg',
+        'images/items/f2_5_d2.svg',
+        'images/items/f2_5_t.svg',
+        'images/items/f2_6_d1.svg',
+        'images/items/f2_6_d2.svg',
+        'images/items/f2_6_t.svg',
+        'images/items/v_1_d1.gif',
+        'images/items/v_1_d2.gif',
+        'images/items/v_1_t.gif',
+        'images/items/v_2_d1.gif',
+        'images/items/v_2_d2.gif',
+        'images/items/v_2_t.gif',
+        'images/items/v_3_d1.gif',
+        'images/items/v_3_d2.gif',
+        'images/items/v_3_t.gif',
+        'images/items/v_4_d1.gif',
+        'images/items/v_4_d2.gif',
+        'images/items/v_4_t.gif',
+        'images/items/v_5_d1.gif',
+        'images/items/v_5_d2.gif',
+        'images/items/v_5_t.gif',
+        'images/items/v_6_d1.gif',
+        'images/items/v_6_d2.gif',
+        'images/items/v_6_t.gif',
+      ];
+
+      const preloadImages = (paths) =>
+        Promise.all(
+          paths.map(
+            (src) =>
+              new Promise((resolve, reject) => {
+                const img = new Image();
+                img.src = src;
+                img.onload = resolve;
+                img.onerror = () => {
+                  console.warn(`Failed to load: ${src}`);
+                  resolve(); // don’t block on failure
+                };
+              })
+          )
+        );
+
+      preloadImages(imagePaths).then(() => {
+        console.log('All images loaded (or attempted)');
+        button.disabled = false;
+
+        button.addEventListener('click', handleContinueClick, {
+          capture: false,
+        });
+      });
+
       if (!devmode & !responseLog.meta.iOSSafari); openFullscreen();
       headingFullscreen.style.display = 'none';
       headingTestsound.style.display = 'inline';

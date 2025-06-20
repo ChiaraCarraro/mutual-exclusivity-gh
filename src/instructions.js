@@ -9,19 +9,20 @@ const subjID =
 const webcam =
   new URL(document.location.href).searchParams.get('webcam') || false;
 
+
 // define what happens on button click
 const handleContinueClick = (event) => {
   event.preventDefault();
   window.location.href = `./mutex.html?ID=${subjID}&webcam=${webcam}`;
 };
 
+button.addEventListener('click', handleContinueClick, {
+    capture: false,
+  });
+
 const handleWebcamClick = (event) => {
   event.preventDefault();
 };
-
-button.addEventListener('click', handleContinueClick, {
-  capture: false,
-});
 
 button.addEventListener('click', handleWebcamClick, {
   capture: false,
