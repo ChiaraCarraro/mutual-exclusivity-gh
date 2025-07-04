@@ -1,10 +1,18 @@
 import './css/landingpages.css';
+const storedChoices = localStorage.getItem('storedChoices');
+let studyChoices;
+
+if (storedChoices) {
+  studyChoices = JSON.parse(storedChoices);
+} else {
+  console.error('No data found in local storage');
+}
 
 const button = document.getElementById('confirm-btn');
 const checkbox = document.getElementById('confirm-checkbox');
 const pDelete = document.getElementById('p-delete');
 const aDownload = document.getElementById('a-download');
-const subjID = new URL(document.location.href).searchParams.get('ID');
+const subjID = studyChoices.ID || 'testID';
 
 const handleChecked = () => {
   button.disabled = !checkbox.checked;
@@ -41,7 +49,7 @@ const handleConfirmClick = (event) => {
 
   const toSave = {
     // get ID out of URL parameter
-    subjID: new URL(document.location.href).searchParams.get('ID'),
+    subjID: storedChoices.ID || 'testID',
     deleteData: true,
     timestamp: date.toISOString(),
     epoch: date.getTime(),

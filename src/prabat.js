@@ -12,6 +12,16 @@ import { getUniqueTrial } from './js/getUniqueTrial.js';
 import { shuffleArray } from './js/shuffleArray.js';
 import { noSamePos } from './js/noSamePos.js';
 
+const storedChoices = localStorage.getItem('storedChoices');
+let studyChoices;
+
+if (storedChoices) {
+  studyChoices = JSON.parse(storedChoices);
+} else {
+  console.error('No data found in local storage');
+}
+
+
 document.addEventListener('DOMContentLoaded', function () {
   const devmode = false;
 
@@ -31,13 +41,10 @@ document.addEventListener('DOMContentLoaded', function () {
   const responseLog = {
     // get ID out of URL parameter
     meta: {
-      subjID:
-        new URL(document.location.href).searchParams.get('ID') || 'testID',
+      subjID: studyChoices.ID || 'testID',
       order: window.location.pathname.split('/').pop().replace('.html', ''),
       touchscreen: checkForTouchscreen(),
-      webcam:
-        new URL(document.location.href).searchParams.get('webcam') === 'true' ||
-        false,
+      webcam: studyChoices.webcam || false,
     },
     data: [],
   };
@@ -219,7 +226,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
       await pause(1000);
 
-      window.location.href = `./goodbye.html?ID=${responseLog.meta.subjID}`;
+      studyChoices.ID = responseLog.meta.subjID;
+      window.location.href = `./goodbye.html`;
     }
         
 
