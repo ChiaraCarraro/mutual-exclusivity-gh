@@ -357,16 +357,19 @@ document.addEventListener('DOMContentLoaded', function () {
       preloadAssets(filePaths).then(async () => {
         console.log('✅ All assets preloaded');
 
-        // Now continue with the rest of the flow
-        if (!devmode && !responseLog.meta.iOSSafari) {
-          openFullscreen();
-        }
-
         headingFullscreen.style.display = 'none';
         headingTestsound.style.display = 'inline';
         speaker.setAttribute('visibility', 'visible');
 
-        await pause(1000);
+
+        if (!devmode && !responseLog.meta.iOSSafari) {
+            try {
+              openFullscreen();
+              console.log('✅ Fullscreen entered');
+            } catch (err) {
+              console.warn('⚠️ Fullscreen failed:', err);
+            }
+        }
 
         const testSoundElement = document.getElementById('testsound');
         if (testSoundElement) {
@@ -383,18 +386,16 @@ document.addEventListener('DOMContentLoaded', function () {
         await pause(1000);
 
         button.disabled = false;
-        button.addEventListener('click', handleContinueClick, {
-          capture: false,
-          once: true,
-        });
+        // Move fullscreen trigger into this gesture
+        button.addEventListener('click', handleContinueClick, { once: true });
       });
     }
 
 
     // end of trials
     if (trialNr === 34) {
-      downloadData(responseLog.data, responseLog.meta.subjID);
-      uploadData(responseLog.data, responseLog.meta.subjID);
+      await downloadData(responseLog.data, responseLog.meta.subjID);
+      await uploadData(responseLog.data, responseLog.meta.subjID);
 
       // save the video locally
       if (!responseLog.meta.iOSSafari && responseLog.meta.webcam) {
