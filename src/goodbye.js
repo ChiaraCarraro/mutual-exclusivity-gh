@@ -1,4 +1,6 @@
 import './css/landingpages.css';
+
+document.addEventListener('DOMContentLoaded', () => {
 const storedChoices = localStorage.getItem('storedChoices');
 let studyChoices;
 
@@ -8,48 +10,48 @@ if (storedChoices) {
   console.error('No data found in local storage');
 }
 
-const button = document.getElementById('confirm-btn');
-const checkbox = document.getElementById('confirm-checkbox');
-const pDelete = document.getElementById('p-delete');
-const aDownload = document.getElementById('a-download');
-const subjID = studyChoices.ID || 'testID';
+  const button = document.getElementById('confirm-btn');
+  const checkbox = document.getElementById('confirm-checkbox');
+  const pDelete = document.getElementById('p-delete');
+  const aDownload = document.getElementById('a-download');
+  const subjID = studyChoices.ID || 'testID';
 
-const handleChecked = () => {
-  button.disabled = !checkbox.checked;
-};
+  const handleChecked = () => {
+    button.disabled = !checkbox.checked;
+  };
 
-document
-  .querySelector('.mdc-checkbox')
-  .addEventListener('click', handleChecked);
+  document
+    .querySelector('.mdc-checkbox')
+    .addEventListener('click', handleChecked);
 
-// function for response logging, creating json file on server
-function downloadData(safe, ID) {
-  fetch('data/data.php', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({ data: JSON.stringify(safe), fname: ID }),
-  })
-    .then((response) => response.json())
-    .then((data) => {
-      console.log('Success:', data);
+  // function for response logging, creating json file on server
+  function downloadData(safe, ID) {
+    fetch('data/data.php', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ data: JSON.stringify(safe), fname: ID }),
     })
-    .catch((error) => {
-      console.error('Error:', error);
-    });
-}
+      .then((response) => response.json())
+      .then((data) => {
+        console.log('Success:', data);
+      })
+      .catch((error) => {
+        console.error('Error:', error);
+      });
+  }
 
-const handleConfirmClick = (event) => {
-  event.preventDefault();
+  const handleConfirmClick = (event) => {
+    event.preventDefault();
 
-  pDelete.innerHTML = '<strong>Wir werden Ihre Daten löschen. Danke!</strong>';
+    pDelete.innerHTML = '<strong>Wir werden Ihre Daten löschen. Danke!</strong>';
 
-  const date = new Date();
+    const date = new Date();
 
   const toSave = {
     // get ID out of URL parameter
-    subjID: storedChoices.ID || 'testID',
+    subjID: studyChoices.ID || 'testID',
     deleteData: true,
     timestamp: date.toISOString(),
     epoch: date.getTime(),
@@ -58,14 +60,15 @@ const handleConfirmClick = (event) => {
   downloadData(toSave, toSaveID);
 };
 
-button.addEventListener('click', handleConfirmClick, {
-  capture: false,
-  once: true,
+  button.addEventListener('click', handleConfirmClick, {
+    capture: false,
+    once: true,
+  });
+
+  // define what happens on button click
+  const handleDownloadClick = () => {
+    window.open('images/thanks.pdf');
+  };
+
+  aDownload.addEventListener('click', handleDownloadClick, { capture: false });
 });
-
-// define what happens on button click
-const handleDownloadClick = () => {
-  window.open('images/thanks.pdf');
-};
-
-aDownload.addEventListener('click', handleDownloadClick, { capture: false });

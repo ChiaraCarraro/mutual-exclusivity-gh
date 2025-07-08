@@ -1,8 +1,8 @@
-# oREV-VN: Open Receptive Vocabulary Task with Verbs and Nouns. An Extension of the oREV by Bohn\*, Prein\*, Koch, Bee, Delikaya, Haun, & Gagarina (2024).
+# MutEx: An open mutual exclusivity task for pre-school children
 
 ### Usage
 
-Link to task (in German): https://devpsy.web.leuphana.de/orev-vn
+Link to task (in German): https://devpsy.web.leuphana.de/mutual-exclusivity
 
 ### Structure
 
@@ -23,7 +23,7 @@ Link to task (in German): https://devpsy.web.leuphana.de/orev-vn
 |    ├── goodbye.js              <-- functionality for last html page after study is over
 |    ├── index.js                <-- functionality for very first html page
 |    ├── instructions.js         <-- functionality for instructions html page before the study starts
-|    └── orev.js                 <-- functionality for the study itself
+|    └── mutex.js                 <-- functionality for the study itself
 └── ...some more config files
 
 ```
@@ -34,13 +34,13 @@ Development requires [Node.js](https://nodejs.org/en/)
 
 #### Local Development
 
-1. `git clone git@github.com:jprein/orev-vn.git`
+1. `git clone git@github.com:chiaracarraro/mutual-exclusivity-gh.git`
 1. `npm install`
 1. `npm start`
 
 #### Deploy Application To A Server
 
-1. `git clone git@github.com:jprein/orev-vn.git`
+1. `git clone git@github.com:chiaracarraro/mutual-exclusivity-gh.git`
 1. `npm install`
 1. `npm run build`
 1. Upload the contents within the `dist` folder to your web hoster.

@@ -1,21 +1,29 @@
 // Function to get filename
 
-export const getUniqueTrial = (alreadyAppearedTrials, lastTwoLetters, counterN, counterA, counterV) => {
-  const letters = ['N', 'A', 'V'];
+export const getUniqueTrial = (alreadyAppearedTrials, lastTwoLetters, counterN, counterA, counterV, counterF1, counterF2) => {
+  const letters = ['n', 'a', 'v', 'f1', 'f2']; // Array of letters to choose from
   let selectedLetter;
 
+  // Remove letters if their counters are 2 or more
+
   if (counterA >= 2) {
-    letters.splice(letters.indexOf('A'), 1); // Remove 'A' if it has been used 6 times
+    letters.splice(letters.indexOf('a'), 1); 
   }
   if (counterN >= 2) {
-    letters.splice(letters.indexOf('N'), 1); // Remove 'N' if it has been used 6 times
+    letters.splice(letters.indexOf('n'), 1);
   }
   if (counterV >= 2) {
-    letters.splice(letters.indexOf('V'), 1); // Remove 'V' if it has been used 6 times
+    letters.splice(letters.indexOf('v'), 1); 
+  }
+  if (counterF1 >= 2) {
+    letters.splice(letters.indexOf('f1'), 1); 
+  }
+  if (counterF2 >= 2) {
+    letters.splice(letters.indexOf('f2'), 1); 
   }
 
   if (letters.length == 0) {
-    letters.push('N', 'A', 'V'); // Reset the letters array 
+    letters.push('n', 'a', 'v', 'f1', 'f2'); // Reset the letters array 
   }
   console.log(letters);
 
