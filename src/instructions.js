@@ -32,10 +32,6 @@ button.addEventListener('click', handleContinueClick, {
     capture: false,
   });
 
-const handleWebcamClick = (event) => {
-  event.preventDefault();
-};
-
 button.addEventListener('click', handleWebcamClick, {
   capture: false,
 });

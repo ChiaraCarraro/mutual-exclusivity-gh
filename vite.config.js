@@ -14,7 +14,7 @@ export default defineConfig({
       input: {
         index: './src/index.html',
         instructions: './src/instructions.html',
-        orev: './src/prabat.html',
+        mutex: './src/mutex.html',
         goodbye: './src/goodbye.html',
       },
     },
