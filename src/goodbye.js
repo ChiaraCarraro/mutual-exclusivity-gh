@@ -1,12 +1,20 @@
 import './css/landingpages.css';
 
 document.addEventListener('DOMContentLoaded', () => {
+const storedChoices = localStorage.getItem('storedChoices');
+let studyChoices;
+
+if (storedChoices) {
+  studyChoices = JSON.parse(storedChoices);
+} else {
+  console.error('No data found in local storage');
+}
 
   const button = document.getElementById('confirm-btn');
   const checkbox = document.getElementById('confirm-checkbox');
   const pDelete = document.getElementById('p-delete');
   const aDownload = document.getElementById('a-download');
-  const subjID = new URL(document.location.href).searchParams.get('ID');
+  const subjID = studyChoices.ID || 'testID';
 
   const handleChecked = () => {
     button.disabled = !checkbox.checked;
@@ -41,16 +49,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const date = new Date();
 
-    const toSave = {
-      // get ID out of URL parameter
-      subjID: new URL(document.location.href).searchParams.get('ID'),
-      deleteData: true,
-      timestamp: date.toISOString(),
-      epoch: date.getTime(),
-    };
-    const toSaveID = `DELETE${subjID}`;
-    downloadData(toSave, toSaveID);
+  const toSave = {
+    // get ID out of URL parameter
+    subjID: studyChoices.ID || 'testID',
+    deleteData: true,
+    timestamp: date.toISOString(),
+    epoch: date.getTime(),
   };
+  const toSaveID = `DELETE${subjID}`;
+  downloadData(toSave, toSaveID);
+};
 
   button.addEventListener('click', handleConfirmClick, {
     capture: false,

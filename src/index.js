@@ -24,7 +24,7 @@ textField.addEventListener('keyup', handleInput, { capture: false });
 // FOR WEBCAM RECORIDING
 // get both radio buttons
 const webcamOptions = document.getElementsByName('webcam-options');
-let webcam = 'false'; // no as default
+let webcam = false; // no as default
 
 for (const option of webcamOptions) {
   option.onclick = () => {
@@ -39,7 +39,14 @@ for (const option of webcamOptions) {
 const handleContinueClick = (event) => {
   event.preventDefault();
   const subjID = document.getElementById('participant-id').value;
-  window.location.href = `./instructions.html?ID=${subjID}&webcam=${webcam}`;
+
+  const studyChoices = {
+    ID: subjID,
+    webcam: webcam,
+  };
+  
+  localStorage.setItem('storedChoices', JSON.stringify(studyChoices));
+  window.location.href = `./instructions.html`;
 };
 
 button.addEventListener('click', handleContinueClick);

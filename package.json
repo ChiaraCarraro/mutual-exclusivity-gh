@@ -4,10 +4,13 @@
     "description": "",
     "main": "src/index.js",
     "scripts": {
-        "build": "cross-env NODE_ENV=production webpack --mode production",
-        "start": "webpack serve --mode development",
+        "start": "webpack serve",
+        "build": "NODE_ENV=production webpack",
         "deploy": "npm run build & sh src/scripts/deploy.sh",
-        "fetchdata": "sh src/scripts/fetchdata.sh"
+        "fetchdata": "sh src/scripts/fetchdata.sh",
+        "dev": "bun vite",
+        "build": "bun vite build",
+        "preview": "bun vite preview"
     },
     "keywords": [],
     "author": "",
@@ -20,6 +23,7 @@
     "devDependencies": {
         "@babel/core": "^7.26.0",
         "@babel/preset-env": "^7.26.0",
+        "@vite-pwa/assets-generator": "^1.0.0",
         "copy-webpack-plugin": "^8.1.1",
         "cross-env": "^7.0.3",
         "css-loader": "^7.1.2",
@@ -29,7 +33,11 @@
         "postcss-preset-env": "^10.1.1",
         "sass": "^1.81.0",
         "sass-loader": "^16.0.3",
+        "sharp": "^0.34.2",
+        "sharp-ico": "^0.1.5",
         "style-loader": "^4.0.0",
+        "vite": "^7.0.1",
+        "vite-plugin-pwa": "^1.0.1",
         "webpack": "^5.96.1",
         "webpack-cli": "^5.1.4",
         "webpack-dev-server": "^5.1.0"

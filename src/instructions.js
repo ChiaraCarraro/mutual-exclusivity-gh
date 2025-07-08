@@ -1,19 +1,31 @@
 import './css/landingpages.css';
 const button = document.getElementById('instructions-button');
-const speaker = document.getElementById('speaker');
+const speaker = document.getElementById('speaker')
 
-// get and store id
-const subjID =
-  new URL(document.location.href).searchParams.get('ID') || 'testID';
+const storedChoices = localStorage.getItem('storedChoices');
+let studyChoices;
 
-const webcam =
-  new URL(document.location.href).searchParams.get('webcam') || false;
+if (storedChoices) {
+  studyChoices = JSON.parse(storedChoices);
+} else {
+  console.error('No data found in local storage');
+}
+
+// get and stored subject ID and webcam choice
+
+studyChoices.ID = studyChoices?.ID ?? 'testID';
+studyChoices.webcam = studyChoices?.webcam ?? false;
 
 
 // define what happens on button click
 const handleContinueClick = (event) => {
   event.preventDefault();
-  window.location.href = `./mutex.html?ID=${subjID}&webcam=${webcam}`;
+  localStorage.setItem('storedChoices', JSON.stringify(studyChoices));
+  window.location.href = `./mutex.html`;
+};
+
+const handleWebcamClick = (event) => {
+  event.preventDefault();
 };
 
 button.addEventListener('click', handleContinueClick, {
