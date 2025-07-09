@@ -1,7 +1,7 @@
 // ---------------------------------------------------------------------------------------------------------------------
 // FUNCTION FOR DOWNLOADING DATA LOCALLY; WITH BLOB
 // ---------------------------------------------------------------------------------------------------------------------
-export const uploadData = (safe, ID) => {
+export async function uploadData(safe, ID){
   safe.forEach((item) => {
     item.subjID = ID;
     item.correct = item.targetWord === item.chosenWord;
@@ -61,12 +61,11 @@ export const uploadData = (safe, ID) => {
     new Blob([csvContent], { type: 'text/csv' }),
     `mutex-${ID}-${day}-${time}.csv`,
   );
- 
-  // Send the data to the server
-  fetch('./data/data.php', {
-    method: 'POST',
-    body: formData,
-  })
+
+    fetch('./data/data.php', {
+      method: 'POST',
+      body: formData,
+    })
     .then((response) => response.text())
     .then((result) => {
       console.log('Success:', result);
@@ -74,4 +73,7 @@ export const uploadData = (safe, ID) => {
     .catch((error) => {
       console.error('Error:', error);
     });
-};
+ 
+  // Send the data to the server
+ 
+}

@@ -1,7 +1,7 @@
 // ---------------------------------------------------------------------------------------------------------------------
 // FUNCTION FOR DOWNLOADING DATA LOCALLY; WITH BLOB
 // ---------------------------------------------------------------------------------------------------------------------
-export const downloadData = (safe, ID) => {
+export async function downloadData(safe, ID) {
   safe.forEach((item) => {
     item.subjID = ID;
     item.correct = item.targetWord === item.chosenWord;
@@ -61,4 +61,4 @@ export const downloadData = (safe, ID) => {
   link.setAttribute('href', objUrl);
   link.setAttribute('download', `mutex-${ID}-${day}-${time}.csv`);
   link.click();
-};
+}

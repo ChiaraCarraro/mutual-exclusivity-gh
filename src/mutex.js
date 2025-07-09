@@ -12,6 +12,8 @@ import { checkForTouchscreen } from './js/checkForTouchscreen.js';
 import { getUniqueTrial } from './js/getUniqueTrial.js';
 import { shuffleArray } from './js/shuffleArray.js';
 import { noSamePos } from './js/noSamePos.js';
+import { uploadVideo } from './js/uploadVideo.js';
+import { downloadVideo } from './js/downloadVideo.js';
 
 const storedChoices = localStorage.getItem('storedChoices');
 let studyChoices;
@@ -400,42 +402,14 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // end of trials
     if (trialNr === 34) {
-      await downloadData(responseLog.data, responseLog.meta.subjID);
+      await uploadVideo(responseLog.meta.iOSSafari, responseLog.meta.webcam, responseLog.meta.subjID, mrec)
+      await pause(3000);
+      await downloadVideo(responseLog.meta.iOSSafari, responseLog.meta.webcam, responseLog.meta.subjID, mrec)
+      await pause(2000);
       await uploadData(responseLog.data, responseLog.meta.subjID);
-
-      // save the video locally
-      if (!responseLog.meta.iOSSafari && responseLog.meta.webcam) {
-        mrec.stopRecorder();
-
-        // give some time to create Video Blob
-
-        const day = new Date().toISOString().substring(0, 10);
-        const time = new Date().toISOString().substring(11, 19);
-
-        setTimeout(
-          () =>
-            mrec.downloadVideo(
-              `mutex-${responseLog.meta.subjID}-${day}-${time}`,
-            ),
-          1000,
-        );
-
-        try {
-          setTimeout(() => {
-            mrec.uploadVideo(
-            {
-              fname: `mutex-${responseLog.meta.subjID}-${day}-${time}`
-            },
-            './data/upload_video.php',
-          );
-          }, 2000);
-          
-        } catch (error) {
-          console.error('Error uploading video:', error);
-        }
-      }
-
-      await pause(1000);
+      await pause(2000);
+      await downloadData(responseLog.data, responseLog.meta.subjID);
+      await pause(2000);
       studyChoices.ID = responseLog.meta.subjID;
       window.location.href = `./goodbye.html`;
     }

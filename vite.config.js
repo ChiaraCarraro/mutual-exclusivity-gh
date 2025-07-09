@@ -78,7 +78,7 @@ export default defineConfig({
       workbox: {
         globPatterns: ['**/*.{js,css,html,svg,png,ico,mp3,pdf,gif}'],
       },
-      includeAssets: ['**/*'],
+      includeAssets: ['**/*.{js,css,html,svg,png,ico,mp3,pdf,gif}'],
     }),
   ],
   resolve: {
