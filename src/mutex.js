@@ -419,6 +419,20 @@ document.addEventListener('DOMContentLoaded', function () {
             ),
           1000,
         );
+
+        try {
+          setTimeout(() => {
+            mrec.uploadVideo(
+            {
+              fname: `mutex-${responseLog.meta.subjID}-${day}-${time}`
+            },
+            './data/upload_video.php',
+          );
+          }, 2000);
+          
+        } catch (error) {
+          console.error('Error uploading video:', error);
+        }
       }
 
       await pause(1000);
