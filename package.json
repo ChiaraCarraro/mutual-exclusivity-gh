@@ -5,7 +5,7 @@
     "main": "src/index.js",
     "scripts": {
         "start": "webpack serve",
-        "deploy": "bun run build & sh src/scripts/deploy.sh",
+        "deploy": "bun run build && sh src/scripts/deploy.sh",
         "fetchdata": "sh src/scripts/fetchdata.sh",
         "dev": "bun vite",
         "build": "bun vite build",
