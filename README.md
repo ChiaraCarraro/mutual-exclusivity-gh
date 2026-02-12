@@ -1,4 +1,4 @@
-# MutEx: An open mutual exclusivity task for pre-school children
+# mutex: An open mutual exclusivity task for pre-school children
 
 ### Usage
 

@@ -14,8 +14,8 @@ if (storedChoices) {
 // get and stored subject ID and webcam choice
 
 studyChoices.ID = studyChoices?.ID ?? 'testID';
+studyChoices.webcam = (studyChoices?.webcam=="true").toString();
 studyChoices.webcam = studyChoices?.webcam ?? false;
-
 
 // define what happens on button click
 const handleContinueClick = (event) => {

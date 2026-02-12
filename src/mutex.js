@@ -402,14 +402,25 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // end of trials
     if (trialNr === 34) {
-      await uploadVideo(responseLog.meta.iOSSafari, responseLog.meta.webcam, responseLog.meta.subjID, mrec)
-      await pause(3000);
-      await downloadVideo(responseLog.meta.iOSSafari, responseLog.meta.webcam, responseLog.meta.subjID, mrec)
-      await pause(2000);
-      await uploadData(responseLog.data, responseLog.meta.subjID);
-      await pause(2000);
-      await downloadData(responseLog.data, responseLog.meta.subjID);
-      await pause(2000);
+
+      try {
+        await downloadData(responseLog.data, responseLog.meta.subjID);
+        await pause(5000);
+      } catch (err) {
+        console.error("Error during uploading processing:", err);
+      } 
+      try {
+        await downloadVideo(responseLog.meta.iOSSafari, responseLog.meta.webcam, responseLog.meta.subjID, mrec);
+        await pause(2000);
+      } catch (err) {
+        console.error("Error during uploading processing:", err);
+      }
+      try {
+        await uploadData(responseLog.data, responseLog.meta.subjID);
+        await pause(2000);
+      } catch (err) {
+        console.error("Error during uploading processing:", err);
+      } 
       studyChoices.ID = responseLog.meta.subjID;
       window.location.href = `./goodbye.html`;
     }
